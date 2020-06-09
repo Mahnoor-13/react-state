@@ -17,20 +17,19 @@ jobs:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
     name: React state to surge
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       - name: Install Node.js
         uses: actions/setup-node@v2-beta
         with:
           node-version: 12
-      - name: Prepare for yarn install
+      - name: Prepare for yarn Installation
         run: curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add - echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
-      - name: Install Yarn
+      - name: install yarn
         run: sudo apt update && sudo apt install yarn
       - name: Build React App
         run: yarn build
       - name: Install Surge
+        run: npm install -g surge
+      - name: Run Surge
         run: surge ./build react-state1_mahnoor.surge.sh --token ${{ secrets.SURGE_TOKEN }}
